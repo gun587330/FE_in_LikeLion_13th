@@ -1,13 +1,16 @@
-import React from 'react'
 import styled from 'styled-components'
 import { getPerPage } from '../apis/userlist.js';
 
-const PageSelection = ({curPage, setCurPage, setUserData}) => {
+const PageSelection = ({curPage, setCurPage, setUserData, filter}) => {
+
     const handleClick = async(page) => {
-        const response = await getPerPage(page);
-        setUserData(response);
+        if(filter === "all"){
+            const response = await getPerPage(page);
+            setUserData(response);
+        }
         setCurPage(page);
-    }
+    };
+
   return (
     <SelectionLayout>
         {[1,2,3,4,5,6].map((val) =>
@@ -18,6 +21,7 @@ const PageSelection = ({curPage, setCurPage, setUserData}) => {
             {val}</PageBox>
         )
         }
+
     </SelectionLayout>
   )
 }
@@ -35,6 +39,6 @@ const PageBox = styled.div`
     color: ${(props) => props.$active ? "#000000" : "#C9C9C9"};
     &:hover{
         cursor: pointer;
-        color: white;
+        color: #C9C9C9;
     }
 `
